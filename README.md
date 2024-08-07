@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Summary Generator API
 
-## Getting Started
+This project provides an API endpoint to generate summaries for YouTube videos or web pages. It leverages the LangChain library and GROQ model to retrieve and summarize content.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Summary Generator API](#summary-generator-api)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [API Endpoint](#api-endpoint)
+  - [Environment Variables](#environment-variables)
+  - [Contributing](#contributing)
+  - [License](#license)
+
+## Features
+
+- Summarizes YouTube videos and web pages.
+- Provides concise summaries with a maximum of five to six sentences.
+- Uses LangChain and OpenAI's GPT model for content retrieval and summarization.
+
+## Installation
+
+1. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+2. Set up environment variables (see [Environment Variables](#environment-variables)).
+
+## Usage
+
+To start the server, run:
+
+```sh
+yarn run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Endpoint
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### POST /api/generate-summary
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Generates a summary for a given YouTube video or web page.
 
-## Learn More
+#### Request Body
 
-To learn more about Next.js, take a look at the following resources:
+- `groqApiKey` - (string, required): Your API key for the Groq service.
+- `link` - (string, required): The URL of the YouTube video or web page to summarize.
+- `temperature` - (number, optional): The temperature setting for the GPT model.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Example Request
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+{
+  "groqApiKey": "your-groq-api-key",
+  "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "temperature": 0.7
+}
+```
 
-## Deploy on Vercel
+#### Example Response
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+{
+  "message": "This is a summary of the video or web page."
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Environment Variables
+
+Create a `.env` file in the root directory and add the following environment variables:
+
+```
+OPENAI_API_KEY=your-openai-api-key
+```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any changes.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
