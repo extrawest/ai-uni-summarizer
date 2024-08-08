@@ -17,6 +17,22 @@ const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 export const POST = async (request: Request) => {
   const body = await request.json();
   const { groqApiKey, link, temperature } = body;
+  const localLLMUrl = process.env.LOCAL_LLM_URL;
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+
+  if (!localLLMUrl && !groqApiKey) {
+    return NextResponse.json(
+      { error: "groqApiKey is required if LOCAL_LLM_URL is not set" },
+      { status: 400 }
+    );
+  }
+
+  if (!openaiApiKey && !localLLMUrl) {
+    return NextResponse.json(
+      { error: "OPENAI_API_KEY is required if LOCAL_LLM_URL is not set" },
+      { status: 400 }
+    );
+  }
 
   if (!link) {
     return NextResponse.json({ error: "link is required" }, { status: 400 });
@@ -26,7 +42,7 @@ export const POST = async (request: Request) => {
     const embeddings = new OpenAIEmbeddings(
       {},
       {
-        baseURL: process.env.LOCAL_LLM_URL,
+        baseURL: localLLMUrl,
       }
     );
 
@@ -41,7 +57,7 @@ export const POST = async (request: Request) => {
             temperature,
           },
           {
-            baseURL: process.env.LOCAL_LLM_URL,
+            baseURL: localLLMUrl,
           }
         );
 
