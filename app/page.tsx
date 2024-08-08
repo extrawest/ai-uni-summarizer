@@ -36,7 +36,7 @@ export default function Home() {
       const response = await axios.post<{
         message: string;
         error?: string;
-      }>('/api/generate-summary', { link, groqApiKey, temperture });
+      }>('/api/generate-summary/with-embeddings', { link, groqApiKey, temperture });
       const { message } = response.data;
       setMessage(message);
     } catch (error) {

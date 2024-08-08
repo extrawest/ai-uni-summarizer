@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 import { ChatGroq } from "@langchain/groq";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { createRetrievalChain } from "langchain/chains/retrieval";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { StringOutputParser } from "@langchain/core/output_parsers";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { PuppeteerWebBaseLoader } from "@langchain/community/document_loaders/web/puppeteer";
-import { StringOutputParser } from "@langchain/core/output_parsers";
 
 const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
