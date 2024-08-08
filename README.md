@@ -70,11 +70,7 @@ Generates a summary for a given YouTube video or web page.
 
 ## Environment Variables
 
-Create a `.env` file in the root directory and add the following environment variables:
-
-```
-OPENAI_API_KEY=your-openai-api-key
-```
+No env variables needed
 
 ## Contributing
 

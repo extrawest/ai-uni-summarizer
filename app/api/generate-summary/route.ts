@@ -8,6 +8,7 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { PuppeteerWebBaseLoader } from "@langchain/community/document_loaders/web/puppeteer";
+import { StringOutputParser } from "@langchain/core/output_parsers";
 
 const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
@@ -42,6 +43,16 @@ export const POST = async (request: Request) => {
       `{context}`,
     ].join("");
 
+    const prompt = ChatPromptTemplate.fromMessages([
+      ["system", systemTemplate],
+    ]);
+
+    const chain = await createStuffDocumentsChain({
+      llm,
+      outputParser: new StringOutputParser(),
+      prompt,
+    });
+
     let youtubeLoader: YoutubeLoader | null = null;
     let webpageLoader: PuppeteerWebBaseLoader | null = null;
     if (youtubeRegex.test(link)) {
@@ -53,35 +64,11 @@ export const POST = async (request: Request) => {
       ? (await youtubeLoader?.load()) || []
       : (await webpageLoader?.load()) || [];
 
-    const prompt = ChatPromptTemplate.fromMessages([
-      ["system", systemTemplate],
-    ]);
-
-    const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000,
-      chunkOverlap: 200,
+    const response = await chain.invoke({
+      context: docs,
     });
 
-    const splits = await textSplitter.splitDocuments(docs);
-    const vectorstore = await MemoryVectorStore.fromDocuments(
-      splits,
-      new OpenAIEmbeddings()
-    );
-
-    const retriever = vectorstore.asRetriever();
-    const questionAnswerChain = await createStuffDocumentsChain({
-      llm,
-      prompt,
-    });
-    const ragChain = await createRetrievalChain({
-      retriever,
-      combineDocsChain: questionAnswerChain,
-    });
-
-    const response = await ragChain.invoke({ input: "Give me a summary" });
-    const { answer } = response;
-
-    return NextResponse.json({ message: answer }, { status: 200 });
+    return NextResponse.json({ message: response }, { status: 200 });
   } catch (e: unknown) {
     console.error(e);
     return NextResponse.json({ error: (e as Error).message }, { status: 500 });
