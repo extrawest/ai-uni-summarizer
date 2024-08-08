@@ -61,7 +61,7 @@ export const POST = async (request: Request) => {
     const systemTemplate = [
       `You are an assistant for summarising content.`,
       `Use the following pieces of retrieved context to summarise youtube video or website content.`,
-      `Do not provide any other information, only title and summary.`,
+      `Provide only title and summary, nothing more.`,
       `The title always should be in the first line of the summary.`,
       `If you don't know the answer, say that you don't know.`,
       `Use ten sentences maximum and keep the answer concise.`,
