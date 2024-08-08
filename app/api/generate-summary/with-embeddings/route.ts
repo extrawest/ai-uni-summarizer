@@ -52,10 +52,7 @@ export const POST = async (request: Request) => {
           temperature,
         })
       : new OpenAI(
-          {
-            model: "TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF",
-            temperature,
-          },
+          { temperature },
           {
             baseURL: localLLMUrl,
           }
@@ -63,13 +60,11 @@ export const POST = async (request: Request) => {
 
     const systemTemplate = [
       `You are an assistant for summarising content.`,
-      `Use the following pieces of retrieved context to summarise`,
-      `youtube video or website content.`,
+      `Use the following pieces of retrieved context to summarise youtube video or website content.`,
+      `Do not provide any other information, only title and summary.`,
       `The title always should be in the first line of the summary.`,
-      `Do not provide text completion.`,
-      `The only content you should provide is title and summary.`,
       `If you don't know the answer, say that you don't know.`,
-      `don't know. Use ten sentences maximum and keep the answer concise.`,
+      `Use ten sentences maximum and keep the answer concise.`,
       `\n\n`,
       `{context}`,
     ].join("");
@@ -112,8 +107,7 @@ export const POST = async (request: Request) => {
     });
 
     const response = await ragChain.invoke({
-      input:
-        "Do not provide text completion. You need to provide only title and summary. Give me a summary of context.",
+      input: "Give me a summary of context.",
     });
     const { answer } = response;
 
