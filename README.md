@@ -1,81 +1,58 @@
-# Summary Generator API
+# Web and YouTube Video Summarizer
 
-This project provides an API endpoint to generate summaries for YouTube videos or web pages. It leverages the LangChain library and GROQ model to retrieve and summarize content.
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
+[![Maintaner](https://img.shields.io/static/v1?label=Nariman%20Mamutov&message=Maintainer&color=red)](mailto:nairman.mamutov@extrawest.com)
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)]()
+![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
+![GitHub release](https://img.shields.io/badge/release-v1.0.0-blue)
 
-## Table of Contents
+![](https://raw.githubusercontent.com/extrawest/ai-uni-summarizer/main/preview.gif)
 
-- [Summary Generator API](#summary-generator-api)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [API Endpoint](#api-endpoint)
-  - [Environment Variables](#environment-variables)
-  - [Contributing](#contributing)
-  - [License](#license)
+This project is designed to scrape a website or YouTube video by URL link and provide a concise summary to the user. It utilizes the power of OpenAI and GROQ API for language processing and LangChain for text and document handling.
 
 ## Features
 
-- Summarizes YouTube videos and web pages.
-- Provides concise summaries with a maximum of five to six sentences.
-- Uses LangChain and OpenAI's GPT model for content retrieval and summarization.
+- Content Summarization: Provides a summary of the content from a given URL.
+- YouTube and Web Support: Handles both YouTube video URLs and regular web page URLs.
+- Customizable Temperature: Allows setting the temperature for the language model to control the creativity of the output.
 
-## Installation
+## Technologies Used
 
-1. Install dependencies:
+- Next.js: Backend framework.
+- OpenAI: For generating embeddings and language processing.
+- GROQ API: For language model interaction.
+- LangChain: For handling text splitting, document combination, and retrieval.
+- Puppeteer: For web scraping.
+- YouTube Data API: For YouTube video data retrieval.
+- React: Frontend framework.
+- Axios: For making HTTP requests.
+- Lucide React: For icons.
+- Tailwind CSS: For styling.
 
-   ```sh
-   npm install
-   ```
+## Getting Started
 
-2. Set up environment variables (see [Environment Variables](#environment-variables)).
+### Prerequisites
 
-## Usage
-
-To start the server, run:
-
-```sh
-yarn run dev
-```
-
-## API Endpoint
-
-### POST /api/generate-summary
-
-Generates a summary for a given YouTube video or web page.
-
-#### Request Body
-
-- `groqApiKey` - (string, required): Your API key for the Groq service.
-- `link` - (string, required): The URL of the YouTube video or web page to summarize.
-- `temperature` - (number, optional): The temperature setting for the GPT model.
-
-#### Example Request
-
-```
-{
-  "groqApiKey": "your-groq-api-key",
-  "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  "temperature": 0.7
-}
-```
-
-#### Example Response
-
-```
-{
-  "message": "This is a summary of the video or web page."
-}
-```
-
-## Environment Variables
-
-No env variables needed
+- Node.js
+- npm or yarn
+- OpenAI API Key
+- (Optional) GROQ API Key
+- (Optional) Local LLM URL
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any changes.
+Contributions are welcome! Please submit a pull request or open an issue to discuss any changes.
 
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgements
+
+- LangChain
+- OpenAI
+- Next.js
+- Puppeteer
+- React
+- Axios
+- Lucide React

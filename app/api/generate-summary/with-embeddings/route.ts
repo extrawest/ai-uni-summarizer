@@ -42,7 +42,7 @@ export const POST = async (request: Request) => {
     const embeddings = new OpenAIEmbeddings(
       {},
       {
-        baseURL: localLLMUrl,
+        ...(localLLMUrl ? { baseURL: localLLMUrl } : {}),
       }
     );
 
